@@ -54,6 +54,7 @@
         T.setupScrollSpy();
 
         // Events
+        setupSidebarResize();
         setupNavbarEvents();
         setupScrollEvents();
         setupKeyboardShortcuts();
@@ -507,6 +508,45 @@
     function closeSidebar() {
         if (sidebar) sidebar.classList.remove('open');
         if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+    }
+
+    // ---- Sidebar Resize ----
+    function setupSidebarResize() {
+        var handle = $('#sidebar-resize-handle');
+        if (!handle || !sidebar) return;
+
+        var startX, startWidth;
+        var savedWidth = U.storeGet('sidebarWidth');
+        if (savedWidth) {
+            document.documentElement.style.setProperty('--sidebar-width', savedWidth + 'px');
+        }
+
+        handle.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            startX = e.clientX;
+            startWidth = sidebar.offsetWidth;
+            handle.classList.add('active');
+            sidebar.classList.add('resizing');
+            document.body.style.cursor = 'col-resize';
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (startX === undefined) return;
+            var delta = e.clientX - startX;
+            var newWidth = Math.max(220, Math.min(600, startWidth + delta));
+            document.documentElement.style.setProperty('--sidebar-width', newWidth + 'px');
+            sidebar.style.width = newWidth + 'px';
+        });
+
+        document.addEventListener('mouseup', function() {
+            if (startX === undefined) return;
+            handle.classList.remove('active');
+            sidebar.classList.remove('resizing');
+            document.body.style.cursor = '';
+            var finalWidth = sidebar.offsetWidth;
+            U.storeSet('sidebarWidth', finalWidth);
+            startX = undefined;
+        });
     }
 
     // ---- Scroll ----

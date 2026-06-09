@@ -199,8 +199,23 @@ body {
     background: var(--color-sidebar-bg);
     border-right: 1px solid var(--color-border);
     overflow-y: auto; z-index: 500;
-    transition: transform 0.3s, background 0.3s;
+    transition: background 0.3s;
 }
+
+.sidebar-resize-handle {
+    position: absolute; top: 0; right: 0; bottom: 0;
+    width: 5px; cursor: col-resize;
+    background: transparent;
+    transition: background 0.2s;
+    z-index: 10;
+}
+
+.sidebar-resize-handle:hover,
+.sidebar-resize-handle.active {
+    background: var(--color-primary);
+}
+
+.sidebar.resizing { user-select: none; pointer-events: none; }
 
 .sidebar-header {
     padding: 16px 20px 12px; font-weight: 700; font-size: 0.85rem;
@@ -264,7 +279,7 @@ body {
 /* ---- Main Content ---- */
 .main-content {
     margin-left: var(--sidebar-width);
-    flex: 1; max-width: 900px; padding: 32px 40px 80px;
+    flex: 1; padding: 32px 48px 80px;
     min-height: calc(100vh - var(--navbar-height));
 }
 
@@ -532,6 +547,8 @@ body {
     .sidebar-overlay.active { display: block; }
 
     .mobile-menu-btn { display: flex; }
+
+    .sidebar-resize-handle { display: none; }
 
     .main-content { margin-left: 0; padding: 20px 16px 60px; }
 
