@@ -55,7 +55,7 @@
 
         // Bookshelf
         if (typeof BOOKS_DATA !== 'undefined' && typeof Bookshelf !== 'undefined') {
-            Bookshelf.init($('.search-wrapper'));
+            Bookshelf.init();
         }
 
         // Events

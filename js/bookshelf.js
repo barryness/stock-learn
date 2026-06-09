@@ -10,7 +10,7 @@
     var panelEl = null;
     var overlayEl = null;
 
-    B.init = function(container) {
+    B.init = function() {
         // Create overlay and panel
         overlayEl = document.createElement('div');
         overlayEl.className = 'bookshelf-overlay';
@@ -21,15 +21,11 @@
         panelEl.className = 'bookshelf-panel';
         document.body.appendChild(panelEl);
 
-        // Button in navbar, before search wrapper
-        var shelfBtn = document.createElement('button');
-        shelfBtn.id = 'bookshelf-btn';
-        shelfBtn.className = 'bookshelf-nav-btn';
-        shelfBtn.title = '推荐阅读';
-        shelfBtn.setAttribute('aria-label', '推荐阅读');
-        shelfBtn.innerHTML = '<i class="fas fa-book-open"></i> <span>推荐阅读</span>';
-        shelfBtn.addEventListener('click', B.open);
-        container.parentNode.insertBefore(shelfBtn, container);
+        // Attach to existing button in navbar
+        var shelfBtn = document.getElementById('bookshelf-btn');
+        if (shelfBtn) {
+            shelfBtn.addEventListener('click', B.open);
+        }
     };
 
     B.open = function() {
