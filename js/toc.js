@@ -39,6 +39,25 @@
                     onNavigate({ chapterId: chapter.id, sectionId: section.id });
                 });
                 sectionList.appendChild(secLink);
+
+                section.headings.forEach(function(h) {
+                    if (h.level > 2) return;
+                    const hLink = document.createElement('a');
+                    hLink.className = 'toc-heading-item';
+                    hLink.dataset.sectionId = section.id;
+                    hLink.dataset.headingId = h.id;
+                    hLink.textContent = h.text;
+                    hLink.href = '#' + section.id;
+                    hLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        onNavigate({ chapterId: chapter.id, sectionId: section.id });
+                        setTimeout(function() {
+                            const el = document.getElementById(h.id);
+                            if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        }, 200);
+                    });
+                    sectionList.appendChild(hLink);
+                });
             });
 
             chDiv.appendChild(header);
