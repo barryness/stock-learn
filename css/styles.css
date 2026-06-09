@@ -538,6 +538,206 @@ body {
     transition: width 0.15s;
 }
 
+/* ---- Bookshelf ---- */
+.bookshelf-overlay {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5); z-index: 2000;
+}
+.bookshelf-overlay.active { display: block; }
+
+.bookshelf-panel {
+    display: none; position: fixed; top: 0; right: 0; bottom: 0; z-index: 2001;
+    width: 680px; max-width: 100vw;
+    background: var(--color-bg); overflow-y: auto;
+    box-shadow: -4px 0 30px rgba(0,0,0,0.15);
+    transition: background 0.3s;
+}
+.bookshelf-panel.active { display: block; }
+
+.bookshelf-header {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--color-bg);
+    padding: 24px 24px 16px;
+    border-bottom: 1px solid var(--color-border);
+}
+.bookshelf-header h2 {
+    font-size: 1.3rem; font-weight: 700; color: var(--color-heading);
+    margin: 0; border: none; padding: 0;
+}
+.bookshelf-header h2 i { margin-right: 6px; }
+.bookshelf-subtitle {
+    font-size: 0.82rem; color: var(--color-text-secondary); margin: 4px 0 0;
+}
+
+.bookshelf-back-btn {
+    position: absolute; top: 22px; left: 24px;
+    background: var(--color-surface); border: 1px solid var(--color-border);
+    border-radius: 50%; width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--color-text-secondary);
+    font-size: 0.85rem; transition: all 0.2s;
+}
+.bookshelf-back-btn:hover {
+    background: var(--color-primary); color: #fff; border-color: var(--color-primary);
+}
+
+/* Book list grid */
+.bookshelf-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px; padding: 24px;
+}
+
+.book-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden; cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+}
+.book-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 16px rgba(46,134,171,0.15);
+    transform: translateY(-2px);
+}
+
+.book-cover {
+    width: 80px; min-height: 110px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.book-emoji { font-size: 2rem; }
+
+.book-info {
+    padding: 14px 16px;
+    display: flex; flex-direction: column; justify-content: center;
+}
+.book-title {
+    font-weight: 700; font-size: 0.95rem;
+    color: var(--color-heading); margin-bottom: 2px;
+}
+.book-author {
+    font-size: 0.78rem; color: var(--color-text-secondary); margin-bottom: 4px;
+}
+.book-tagline {
+    font-size: 0.75rem; color: var(--color-text-secondary);
+    opacity: 0.7; font-style: italic; line-height: 1.3;
+}
+
+/* Book content */
+.book-content { padding: 24px; }
+
+.book-intro-card {
+    background: linear-gradient(135deg, var(--color-sidebar-active-bg), var(--color-surface));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md); padding: 20px 24px;
+    margin-bottom: 28px; line-height: 1.8;
+    font-size: 0.92rem; color: var(--color-text);
+}
+
+/* Chapter cards */
+.chapter-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md); margin-bottom: 18px;
+    overflow: hidden; transition: border-color 0.2s;
+}
+.chapter-card:hover { border-color: var(--color-primary); }
+
+.chapter-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 20px;
+    background: var(--color-sidebar-hover);
+}
+.chapter-num {
+    font-size: 1.8rem; font-weight: 800;
+    color: var(--color-primary); opacity: 0.3;
+    font-family: var(--font-mono); min-width: 36px; line-height: 1;
+}
+.chapter-header h3 {
+    font-size: 1rem; font-weight: 700;
+    color: var(--color-heading); margin: 0;
+}
+.chapter-icon { color: var(--color-primary); margin-right: 4px; }
+
+.chapter-body { padding: 20px; }
+
+.chapter-story {
+    display: flex; gap: 10px; margin-bottom: 16px;
+    color: var(--color-text); font-size: 0.9rem; line-height: 1.75;
+}
+.story-icon {
+    color: var(--color-primary); font-size: 0.85rem;
+    margin-top: 4px; flex-shrink: 0;
+}
+
+.chapter-quote {
+    padding: 14px 18px; margin: 0 0 16px;
+    background: var(--color-blockquote);
+    border-left: 3px solid var(--color-accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    position: relative;
+}
+.chapter-quote .quote-icon {
+    position: absolute; top: -6px; left: 10px;
+    color: var(--color-accent); opacity: 0.2; font-size: 1rem;
+}
+.chapter-quote p {
+    margin: 0; font-style: italic; font-size: 0.88rem;
+    color: var(--color-text); line-height: 1.6;
+}
+
+.chapter-takeaway {
+    padding: 14px 18px; margin-bottom: 12px;
+    background: var(--color-sidebar-active-bg);
+    border-radius: var(--radius-sm);
+}
+.takeaway-label {
+    font-size: 0.78rem; font-weight: 700;
+    color: var(--color-primary); margin-bottom: 6px;
+}
+.chapter-takeaway p,
+.chapter-takeaway li {
+    font-size: 0.85rem; color: var(--color-text); margin-bottom: 4px;
+    line-height: 1.6;
+}
+.chapter-takeaway ul { margin: 0 0 0 18px; }
+
+.chapter-tip {
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #fff8e1, #fff3cd);
+    border: 1px solid #ffe082; border-radius: var(--radius-sm);
+    font-size: 0.82rem; color: #795548; line-height: 1.5;
+}
+[data-theme="dark"] .chapter-tip {
+    background: linear-gradient(135deg, #3e3520, #4a3f0a);
+    border-color: #5a4f1a; color: #c9b870;
+}
+
+/* Book closing */
+.book-closing {
+    text-align: center; padding: 32px 24px; position: relative;
+}
+.book-closing .closing-quote-icon {
+    font-size: 2rem; color: var(--color-primary); opacity: 0.15;
+    display: block; margin-bottom: 12px;
+}
+.book-closing p {
+    font-size: 1rem; color: var(--color-text-secondary);
+    font-style: italic; line-height: 1.7; max-width: 480px;
+    margin: 0 auto;
+}
+
+/* Responsive bookshelf */
+@media (max-width: 768px) {
+    .bookshelf-panel { width: 100vw; }
+    .bookshelf-grid { grid-template-columns: 1fr; padding: 16px; }
+    .book-content { padding: 16px; }
+    .bookshelf-header { padding: 18px 16px 12px; }
+    .bookshelf-header h2 { font-size: 1.1rem; }
+}
+
 /* ---- Responsive ---- */
 @media (max-width: 768px) {
     :root { --sidebar-width: 280px; }

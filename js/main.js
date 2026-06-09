@@ -53,6 +53,11 @@
         // Scroll spy
         T.setupScrollSpy();
 
+        // Bookshelf
+        if (typeof BOOKS_DATA !== 'undefined' && typeof Bookshelf !== 'undefined') {
+            Bookshelf.init($('.search-wrapper'));
+        }
+
         // Events
         setupSidebarResize();
         setupNavbarEvents();
