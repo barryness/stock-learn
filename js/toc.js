@@ -28,20 +28,10 @@
             sectionList.className = 'toc-section-list';
 
             chapter.sections.forEach(function(section) {
-                // Wrapper for section + its headings
                 const secWrapper = document.createElement('div');
                 secWrapper.className = 'toc-section-wrapper';
 
-                // Row: toggle icon + section link
-                const secRow = document.createElement('div');
-                secRow.className = 'toc-section-row';
-
                 const hasHeadings = section.headings && section.headings.some(function(h) { return h.level <= 2; });
-
-                const toggleIcon = document.createElement('span');
-                toggleIcon.className = 'section-toggle-icon';
-                toggleIcon.textContent = hasHeadings ? '▾' : '';
-                toggleIcon.style.visibility = hasHeadings ? 'visible' : 'hidden';
 
                 const secLink = document.createElement('a');
                 secLink.className = 'toc-section-item';
@@ -51,23 +41,15 @@
                 secLink.href = '#' + section.id;
                 secLink.addEventListener('click', function(e) {
                     e.preventDefault();
-                    onNavigate({ chapterId: chapter.id, sectionId: section.id });
-                });
-
-                secRow.appendChild(toggleIcon);
-                secRow.appendChild(secLink);
-
-                secRow.addEventListener('click', function(e) {
-                    if (e.target === toggleIcon || toggleIcon.contains(e.target)) {
-                        e.preventDefault();
-                        e.stopPropagation();
+                    if (hasHeadings) {
                         T.toggleSection(secWrapper);
+                    } else {
+                        onNavigate({ chapterId: chapter.id, sectionId: section.id });
                     }
                 });
 
-                secWrapper.appendChild(secRow);
+                secWrapper.appendChild(secLink);
 
-                // Heading list below the row
                 var headingList = document.createElement('div');
                 headingList.className = 'toc-heading-list';
 
@@ -113,10 +95,6 @@
 
     T.toggleSection = function(wrapper) {
         wrapper.classList.toggle('collapsed');
-        var icon = wrapper.querySelector('.section-toggle-icon');
-        if (icon) {
-            icon.textContent = wrapper.classList.contains('collapsed') ? '▸' : '▾';
-        }
     };
 
     T.setActiveTocItem = function(sectionId) {

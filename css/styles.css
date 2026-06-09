@@ -255,29 +255,13 @@ body {
 
 .toc-section-wrapper { margin-bottom: 1px; }
 
-.toc-section-row {
-    display: flex; align-items: center; border-radius: var(--radius-sm);
-    transition: background 0.15s;
-}
-
-.toc-section-row:hover { background: var(--color-sidebar-hover); }
-
-.section-toggle-icon {
-    font-size: 0.55rem; color: var(--color-text-secondary);
-    width: 16px; text-align: center; flex-shrink: 0; cursor: pointer;
-    padding: 6px 0 6px 12px; user-select: none;
-    transition: transform 0.2s;
-}
-
-.toc-section-wrapper.collapsed .section-toggle-icon {
-    transform: rotate(0deg);
-}
-
 .toc-section-item {
-    display: block; flex: 1; padding: 6px 12px 6px 2px; border-radius: var(--radius-sm);
+    display: block; padding: 6px 12px 6px 36px; border-radius: var(--radius-sm);
     font-size: 0.85rem; color: var(--color-text-secondary);
     text-decoration: none; cursor: pointer; transition: all 0.15s;
 }
+
+.toc-section-item:hover { background: var(--color-sidebar-hover); color: var(--color-text); }
 
 .toc-section-item.active {
     color: var(--color-sidebar-active); background: var(--color-sidebar-active-bg);
