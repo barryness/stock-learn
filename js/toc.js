@@ -28,6 +28,21 @@
             sectionList.className = 'toc-section-list';
 
             chapter.sections.forEach(function(section) {
+                // Wrapper for section + its headings
+                const secWrapper = document.createElement('div');
+                secWrapper.className = 'toc-section-wrapper';
+
+                // Row: toggle icon + section link
+                const secRow = document.createElement('div');
+                secRow.className = 'toc-section-row';
+
+                const hasHeadings = section.headings && section.headings.some(function(h) { return h.level <= 2; });
+
+                const toggleIcon = document.createElement('span');
+                toggleIcon.className = 'section-toggle-icon';
+                toggleIcon.textContent = hasHeadings ? '▾' : '';
+                toggleIcon.style.visibility = hasHeadings ? 'visible' : 'hidden';
+
                 const secLink = document.createElement('a');
                 secLink.className = 'toc-section-item';
                 secLink.dataset.sectionId = section.id;
@@ -38,7 +53,23 @@
                     e.preventDefault();
                     onNavigate({ chapterId: chapter.id, sectionId: section.id });
                 });
-                sectionList.appendChild(secLink);
+
+                secRow.appendChild(toggleIcon);
+                secRow.appendChild(secLink);
+
+                secRow.addEventListener('click', function(e) {
+                    if (e.target === toggleIcon || toggleIcon.contains(e.target)) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        T.toggleSection(secWrapper);
+                    }
+                });
+
+                secWrapper.appendChild(secRow);
+
+                // Heading list below the row
+                var headingList = document.createElement('div');
+                headingList.className = 'toc-heading-list';
 
                 section.headings.forEach(function(h) {
                     if (h.level > 2) return;
@@ -56,8 +87,11 @@
                             if (el) el.scrollIntoView({ behavior: 'smooth' });
                         }, 200);
                     });
-                    sectionList.appendChild(hLink);
+                    headingList.appendChild(hLink);
                 });
+
+                secWrapper.appendChild(headingList);
+                sectionList.appendChild(secWrapper);
             });
 
             chDiv.appendChild(header);
@@ -77,6 +111,14 @@
         if (list) list.classList.toggle('collapsed');
     };
 
+    T.toggleSection = function(wrapper) {
+        wrapper.classList.toggle('collapsed');
+        var icon = wrapper.querySelector('.section-toggle-icon');
+        if (icon) {
+            icon.textContent = wrapper.classList.contains('collapsed') ? '▸' : '▾';
+        }
+    };
+
     T.setActiveTocItem = function(sectionId) {
         document.querySelectorAll('.toc-section-item.active, .toc-chapter-header.active').forEach(function(el) {
             el.classList.remove('active');
@@ -84,6 +126,7 @@
         const sectionEl = document.querySelector('.toc-section-item[data-section-id="' + sectionId + '"]');
         if (sectionEl) {
             sectionEl.classList.add('active');
+            // Expand parent chapter
             const chapterHeader = sectionEl.closest('.toc-chapter');
             if (chapterHeader) {
                 const header = chapterHeader.querySelector('.toc-chapter-header');
@@ -95,6 +138,11 @@
                 if (sectionList.previousElementSibling) {
                     sectionList.previousElementSibling.classList.remove('collapsed');
                 }
+            }
+            // Expand parent section wrapper
+            const secWrapper = sectionEl.closest('.toc-section-wrapper');
+            if (secWrapper && secWrapper.classList.contains('collapsed')) {
+                T.toggleSection(secWrapper);
             }
         }
     };
