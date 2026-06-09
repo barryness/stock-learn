@@ -32,6 +32,9 @@
                 secWrapper.className = 'toc-section-wrapper';
 
                 const hasHeadings = section.headings && section.headings.some(function(h) { return h.level <= 2; });
+                if (hasHeadings) {
+                    secWrapper.classList.add('collapsed');
+                }
 
                 const secLink = document.createElement('a');
                 secLink.className = 'toc-section-item';
