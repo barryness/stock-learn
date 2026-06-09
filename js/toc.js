@@ -46,9 +46,8 @@
                     e.preventDefault();
                     if (hasHeadings) {
                         T.toggleSection(secWrapper);
-                    } else {
-                        onNavigate({ chapterId: chapter.id, sectionId: section.id });
                     }
+                    onNavigate({ chapterId: chapter.id, sectionId: section.id });
                 });
 
                 secWrapper.appendChild(secLink);
