@@ -22,6 +22,11 @@ CHAPTER_DIRS = [
     ('09', '09-构建个人投资系统', '第九阶段：构建个人投资系统'),
 ]
 
+# Explicit section ordering within chapters (files listed in desired display order)
+SECTION_ORDER = {
+    '08-量化投资': ['09-量化投资入门.md', '09-量化投资进阶.md', '09-量化投资机构实战.md'],
+}
+
 
 def escape_js_string(s):
     """Escape a string for embedding in a JS template literal"""
@@ -29,10 +34,13 @@ def escape_js_string(s):
 
 
 def find_md_files(chapter_dir):
-    """Find all .md files in a chapter directory, sorted"""
+    """Find all .md files in a chapter directory, in display order"""
     path = os.path.join(BASE_DIR, '..', chapter_dir)
     if not os.path.isdir(path):
         return []
+    if chapter_dir in SECTION_ORDER:
+        files = [f for f in SECTION_ORDER[chapter_dir] if os.path.isfile(os.path.join(path, f))]
+        return files
     files = sorted([f for f in os.listdir(path) if f.endswith('.md')])
     return files
 
