@@ -24,9 +24,10 @@
         // Button in navbar, before search wrapper
         var shelfBtn = document.createElement('button');
         shelfBtn.id = 'bookshelf-btn';
-        shelfBtn.title = '书架';
-        shelfBtn.setAttribute('aria-label', '书架');
-        shelfBtn.innerHTML = '<i class="fas fa-book-open"></i>';
+        shelfBtn.className = 'bookshelf-nav-btn';
+        shelfBtn.title = '推荐阅读';
+        shelfBtn.setAttribute('aria-label', '推荐阅读');
+        shelfBtn.innerHTML = '<i class="fas fa-book-open"></i> <span>推荐阅读</span>';
         shelfBtn.addEventListener('click', B.open);
         container.parentNode.insertBefore(shelfBtn, container);
     };

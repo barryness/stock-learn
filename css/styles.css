@@ -538,6 +538,20 @@ body {
     transition: width 0.15s;
 }
 
+/* ---- Bookshelf Nav Button ---- */
+.bookshelf-nav-btn {
+    background: none; border: 1px solid var(--color-border);
+    border-radius: 20px; color: var(--color-text-secondary);
+    cursor: pointer; display: flex; align-items: center; gap: 5px;
+    padding: 6px 14px; font-size: 0.85rem;
+    white-space: nowrap; transition: all 0.2s;
+    font-family: inherit; height: 36px;
+}
+.bookshelf-nav-btn:hover {
+    background: var(--color-primary); color: #fff; border-color: var(--color-primary);
+}
+.bookshelf-nav-btn i { font-size: 0.85rem; }
+
 /* ---- Bookshelf ---- */
 .bookshelf-overlay {
     display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -755,10 +769,13 @@ body {
 
     .sidebar-resize-handle { display: none; }
 
+    .bookshelf-nav-btn span { display: none; }
+    .bookshelf-nav-btn { padding: 6px 10px; }
+
     .main-content { margin-left: 0; padding: 20px 16px 60px; }
 
-    .search-wrapper input { width: 140px; }
-    .search-wrapper input:focus { width: 180px; }
+    .search-wrapper input { width: 120px; }
+    .search-wrapper input:focus { width: 160px; }
 
     .welcome-grid { grid-template-columns: 1fr; }
 
