@@ -58,7 +58,7 @@
             var book = BOOKS_DATA[i];
             html += '<div class="book-card" data-book-id="' + book.id + '">';
             html += '<div class="book-cover" style="background: ' + book.cover + '">';
-            var emojiMap = { xiaogouqianqian: '🐕', fubabaqiongbaba: '💰', congmingdetouzizhe: '🦉' };
+            var emojiMap = { xiaogouqianqian: '🐕', fubabaqiongbaba: '💰', congmingdetouzizhe: '🦉', nawaerbaodian: '🚀', qiongchalibaodian: '🧠' };
             html += '<span class="book-emoji">' + (emojiMap[book.id] || '📖') + '</span>';
             html += '</div>';
             html += '<div class="book-info">';
